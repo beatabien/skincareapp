@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({
+  LoginPage({
     Key? key,
   }) : super(key: key);
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,10 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Text('Zaloguj się'),
+              const SizedBox(height: 20),
               TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
@@ -35,6 +42,8 @@ class LoginPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               TextField(
+                controller: passwordController,
+                obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
@@ -42,6 +51,21 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     hintText: 'Hasło'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: emailController.text,
+                        password: passwordController.text);
+                  } catch (error) {
+                    print(error);
+                  }
+                },
+                child: const Text(
+                  'Zaloguj się',
+                ),
               ),
             ],
           ),
