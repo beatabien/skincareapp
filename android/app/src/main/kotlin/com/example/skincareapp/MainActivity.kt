@@ -1,4 +1,4 @@
-package com.example.skincareapp
+package com.beatabien.skincareapp
 
 import io.flutter.embedding.android.FlutterActivity
 

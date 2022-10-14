@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "166095540146",
+    "project_id": "wydatki-50410",
+    "storage_bucket": "wydatki-50410.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166095540146:android:68bfb86d810b799ade5eab",
+        "android_client_info": {
+          "package_name": "com.beatabien.skincareapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166095540146-7nj2uck2fveik375ihrgjgjsncekjhnc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCGE0_e3VRkP0VItuwv6JNWIrRkCqb9FA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166095540146-7nj2uck2fveik375ihrgjgjsncekjhnc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "166095540146-06arg0ho4bglfpq6fiatgvuhi9tske28.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cm.beatabien.flutterApplication7"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
