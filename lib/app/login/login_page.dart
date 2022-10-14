@@ -19,6 +19,33 @@ class LoginPage extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        30,
+                      ),
+                    ),
+                    hintText: 'E-mail'),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        30,
+                      ),
+                    ),
+                    hintText: 'Hasło'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
