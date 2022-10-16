@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({
@@ -38,6 +39,9 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Text(
                 isCreatingAccount == true ? 'Zarejestruj się' : 'Zaloguj się',
+                style: GoogleFonts.kodchasan(
+                  fontSize: 45,
+                ),
               ),
               const SizedBox(height: 20),
               TextField(
@@ -62,36 +66,41 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     hintText: 'Hasło'),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Text(errorMessage),
               const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () async {
-                  if (isCreatingAccount == true) {
-                    try {
-                      await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                              email: widget.emailController.text,
-                              password: widget.passwordController.text);
-                    } catch (error) {
-                      setState(() {
-                        errorMessage = error.toString();
-                      });
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (isCreatingAccount == true) {
+                      try {
+                        await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                                email: widget.emailController.text,
+                                password: widget.passwordController.text);
+                      } catch (error) {
+                        setState(() {
+                          errorMessage = error.toString();
+                        });
+                      }
+                    } else {
+                      try {
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                            email: widget.emailController.text,
+                            password: widget.passwordController.text);
+                      } catch (error) {
+                        setState(() {
+                          errorMessage = error.toString();
+                        });
+                      }
                     }
-                  } else {
-                    try {
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: widget.emailController.text,
-                          password: widget.passwordController.text);
-                    } catch (error) {
-                      setState(() {
-                        errorMessage = error.toString();
-                      });
-                    }
-                  }
-                },
-                child: Text(
-                  isCreatingAccount == true ? 'Zarejestruj się' : 'Zaloguj się',
+                  },
+                  child: Text(
+                    isCreatingAccount == true
+                        ? 'Zarejestruj się'
+                        : 'Zaloguj się',
+                  ),
                 ),
               ),
               if (isCreatingAccount == false) ...[
@@ -101,8 +110,9 @@ class _LoginPageState extends State<LoginPage> {
                       isCreatingAccount = true;
                     });
                   },
-                  child: const Text(
+                  child: Text(
                     'Utwórz konto',
+                    style: GoogleFonts.kodchasan(),
                   ),
                 ),
               ],
@@ -113,8 +123,9 @@ class _LoginPageState extends State<LoginPage> {
                       isCreatingAccount = false;
                     });
                   },
-                  child: const Text(
+                  child: Text(
                     'Masz już konto?',
+                    style: GoogleFonts.kodchasan(),
                   ),
                 ),
               ]
