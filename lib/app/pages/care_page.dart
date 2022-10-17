@@ -7,8 +7,11 @@ class CarePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Jeden'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('SkinCare'),
+        backgroundColor: const Color.fromARGB(255, 209, 167, 216),
+      ),
     );
   }
 }
