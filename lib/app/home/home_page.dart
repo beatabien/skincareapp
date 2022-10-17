@@ -1,6 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:skincareapp/app/pages/care_page.dart';
+import 'package:skincareapp/app/pages/my_account_page.dart';
+import 'package:skincareapp/app/pages/spf_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -22,33 +25,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Builder(builder: (context) {
         if (currentIndex == 0) {
-          return const Center(
-            child: Text('Jeden'),
-          );
+          return const CarePage();
         }
         if (currentIndex == 1) {
-          return const Center(
-            child: Text('Dwa'),
-          );
+          return const SpfPage();
         }
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Jesteś zalogowany jako ${widget.user.email}',
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                },
-                child: const Text(
-                  'Wyloguj się',
-                ),
-              ),
-            ],
-          ),
-        );
+        return MyAccountPage(email: widget.user.email);
       }),
       bottomNavigationBar: CurvedNavigationBar(
         height: 55,
