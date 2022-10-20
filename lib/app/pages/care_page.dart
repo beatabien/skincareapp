@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:skincareapp/app/pages/morning/morning_page.dart';
 
 class CarePage extends StatelessWidget {
   const CarePage({
@@ -20,24 +21,33 @@ class CarePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: 220,
-                    width: 160,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30),
-                            bottomRight: Radius.circular(30)),
-                        image: DecorationImage(
-                          image: AssetImage(
-                            'images/morning.jpg',
-                          ),
-                          fit: BoxFit.cover,
-                        )),
-                    child: Center(
-                      child: Text(
-                        'Rano',
-                        style: GoogleFonts.manrope(fontSize: 30),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const MorningPage(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 220,
+                      width: 160,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                              bottomRight: Radius.circular(30)),
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'images/morning.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                          )),
+                      child: Center(
+                        child: Text(
+                          'Rano',
+                          style: GoogleFonts.manrope(fontSize: 30),
+                        ),
                       ),
                     ),
                   ),
