@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MorningPage extends StatelessWidget {
-  const MorningPage({Key? key}) : super(key: key);
+  MorningPage({Key? key}) : super(key: key);
+
+  final conttoller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class MorningPage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 209, 167, 216),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(10.0),
         child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream:
                 FirebaseFirestore.instance.collection('morning').snapshots(),
@@ -25,13 +27,32 @@ class MorningPage extends StatelessWidget {
                 return const Center(child: Text('Loading'));
               }
               final documents = snapshot.data!.docs;
-              return ListView(
-                children: [MorningWidget(documents[0]['title'])],
-              );
+              return ListView(children: [
+                for (final document in documents) ...[
+                  MorningWidget(document['title'])
+                ],
+                const SizedBox(height: 20),
+                TextField(
+                  controller: conttoller,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        30,
+                      ),
+                    ),
+                    hintText: 'Zaplnuj swoją poranną pielęgnację',
+                  ),
+                ),
+              ]);
             }),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          FirebaseFirestore.instance.collection('morning').add(
+            {'title': conttoller.text},
+          );
+          conttoller.clear();
+        },
         backgroundColor: const Color.fromARGB(255, 209, 167, 216),
         child: const Icon(Icons.add),
       ),
@@ -52,6 +73,7 @@ class MorningWidget extends StatelessWidget {
     return Container(
       color: const Color.fromARGB(255, 155, 106, 164),
       padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(10),
       child: Text(
         title,
         style: GoogleFonts.manrope(
