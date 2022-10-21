@@ -8,28 +8,34 @@ class MorningPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Poranna pielęgnacja'),
-          backgroundColor: const Color.fromARGB(255, 209, 167, 216),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream:
-                  FirebaseFirestore.instance.collection('morning').snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return const Center(child: Text('Something went wrong'));
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: Text('Loading'));
-                }
-                final documents = snapshot.data!.docs;
-                return ListView(
-                  children: [MorningWidget(documents[0]['title'])],
-                );
-              }),
-        ));
+      appBar: AppBar(
+        title: const Text('Poranna pielęgnacja'),
+        backgroundColor: const Color.fromARGB(255, 209, 167, 216),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream:
+                FirebaseFirestore.instance.collection('morning').snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return const Center(child: Text('Something went wrong'));
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: Text('Loading'));
+              }
+              final documents = snapshot.data!.docs;
+              return ListView(
+                children: [MorningWidget(documents[0]['title'])],
+              );
+            }),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: const Color.fromARGB(255, 209, 167, 216),
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }
 
