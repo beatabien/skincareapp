@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:skincareapp/app/pages/morning_example.dart';
 
 class MorningPage extends StatelessWidget {
   MorningPage({Key? key}) : super(key: key);
@@ -52,6 +53,22 @@ class MorningPage extends StatelessWidget {
                     ),
                     hintText: 'Zaplnuj swoją poranną pielęgnację',
                   ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Text('Przykład'),
+                    InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const MorningExample(),
+                            ),
+                          );
+                        },
+                        child: const Icon(Icons.arrow_forward)),
+                  ],
                 ),
               ]);
             }),
