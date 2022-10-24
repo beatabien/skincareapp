@@ -29,7 +29,15 @@ class MorningPage extends StatelessWidget {
               final documents = snapshot.data!.docs;
               return ListView(children: [
                 for (final document in documents) ...[
-                  MorningWidget(document['title'])
+                  Dismissible(
+                      key: ValueKey(document.id),
+                      onDismissed: (_) {
+                        FirebaseFirestore.instance
+                            .collection('morning')
+                            .doc(document.id)
+                            .delete();
+                      },
+                      child: MorningWidget(document['title']))
                 ],
                 const SizedBox(height: 20),
                 TextField(
