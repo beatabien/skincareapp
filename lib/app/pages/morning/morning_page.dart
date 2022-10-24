@@ -17,8 +17,10 @@ class MorningPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            stream:
-                FirebaseFirestore.instance.collection('morning').snapshots(),
+            stream: FirebaseFirestore.instance
+                .collection('morning')
+                .orderBy('title')
+                .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return const Center(child: Text('Something went wrong'));
