@@ -1,50 +1,47 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:skincareapp/app/pages/morning_example.dart';
+import 'package:skincareapp/app/pages/morning/cubit/morning_cubit.dart';
 
 class MorningPage extends StatelessWidget {
   MorningPage({Key? key}) : super(key: key);
 
-  final conttoller = TextEditingController();
+  final controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Poranna pielęgnacja'),
-        backgroundColor: const Color.fromARGB(255, 209, 167, 216),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            stream: FirebaseFirestore.instance
-                .collection('morning')
-                .orderBy('title')
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
+    return BlocProvider(
+      create: (context) => MorningCubit()..start(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Poranna pielęgnacja'),
+          backgroundColor: const Color.fromARGB(255, 209, 167, 216),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: BlocBuilder<MorningCubit, MorningState>(
+            builder: (context, state) {
+              if (state.errorMessage.isNotEmpty) {
                 return const Center(child: Text('Something went wrong'));
               }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: Text('Loading'));
+              if (state.isLoading) {
+                return const Center(child: CircularProgressIndicator());
               }
-              final documents = snapshot.data!.docs;
+              final documents = state.documents;
               return ListView(children: [
                 for (final document in documents) ...[
                   Dismissible(
                       key: ValueKey(document.id),
                       onDismissed: (_) {
-                        FirebaseFirestore.instance
-                            .collection('morning')
-                            .doc(document.id)
-                            .delete();
+                        context
+                            .read<MorningCubit>()
+                            .delete(documentID: document.id);
                       },
                       child: MorningWidget(document['title']))
                 ],
                 const SizedBox(height: 20),
                 TextField(
-                  controller: conttoller,
+                  controller: controller,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
@@ -55,33 +52,22 @@ class MorningPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text('Przykład'),
-                    InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const MorningExample(),
-                            ),
-                          );
-                        },
-                        child: const Icon(Icons.arrow_forward)),
-                  ],
-                ),
               ]);
-            }),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          FirebaseFirestore.instance.collection('morning').add(
-            {'title': conttoller.text},
-          );
-          conttoller.clear();
-        },
-        backgroundColor: const Color.fromARGB(255, 209, 167, 216),
-        child: const Icon(Icons.add),
+            },
+          ),
+        ),
+        floatingActionButton: BlocBuilder<MorningCubit, MorningState>(
+          builder: (context, state) {
+            return FloatingActionButton(
+              onPressed: () {
+                context.read<MorningCubit>().add(controller.text);
+                controller.clear();
+              },
+              backgroundColor: const Color.fromARGB(255, 209, 167, 216),
+              child: const Icon(Icons.add),
+            );
+          },
+        ),
       ),
     );
   }
