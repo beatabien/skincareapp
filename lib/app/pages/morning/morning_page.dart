@@ -17,30 +17,30 @@ class MorningPage extends StatelessWidget {
           title: const Text('Poranna pielęgnacja'),
           backgroundColor: const Color.fromARGB(255, 209, 167, 216),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: BlocBuilder<MorningCubit, MorningState>(
-            builder: (context, state) {
-              if (state.errorMessage.isNotEmpty) {
-                return const Center(child: Text('Something went wrong'));
-              }
-              if (state.isLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              final documents = state.documents;
-              return ListView(children: [
-                for (final document in documents) ...[
-                  Dismissible(
-                      key: ValueKey(document.id),
-                      onDismissed: (_) {
-                        context
-                            .read<MorningCubit>()
-                            .delete(documentID: document.id);
-                      },
-                      child: MorningWidget(document['title']))
-                ],
-                const SizedBox(height: 20),
-                TextField(
+        body: BlocBuilder<MorningCubit, MorningState>(
+          builder: (context, state) {
+            if (state.errorMessage.isNotEmpty) {
+              return const Center(child: Text('Something went wrong'));
+            }
+            if (state.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            final documents = state.documents;
+            return ListView(children: [
+              for (final document in documents) ...[
+                Dismissible(
+                    key: ValueKey(document.id),
+                    onDismissed: (_) {
+                      context
+                          .read<MorningCubit>()
+                          .delete(documentID: document.id);
+                    },
+                    child: MorningWidget(document['title']))
+              ],
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: TextField(
                   controller: controller,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -51,10 +51,9 @@ class MorningPage extends StatelessWidget {
                     hintText: 'Zaplnuj swoją poranną pielęgnację',
                   ),
                 ),
-                const SizedBox(height: 10),
-              ]);
-            },
-          ),
+              ),
+            ]);
+          },
         ),
         floatingActionButton: BlocBuilder<MorningCubit, MorningState>(
           builder: (context, state) {
