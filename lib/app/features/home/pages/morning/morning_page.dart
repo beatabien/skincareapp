@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:skincareapp/app/home/pages/evening/cubit/evening_cubit.dart';
+import 'package:skincareapp/app/features/home/pages/morning/cubit/morning_cubit.dart';
 
-class EveningPage extends StatelessWidget {
-  EveningPage({Key? key}) : super(key: key);
+
+class MorningPage extends StatelessWidget {
+  MorningPage({Key? key}) : super(key: key);
 
   final controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => EveningCubit()..start(),
+      create: (context) => MorningCubit()..start(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Wieczorna pielęgnacja',
-          ),
+          title: const Text('Poranna pielęgnacja'),
           backgroundColor: const Color.fromARGB(255, 209, 167, 216),
         ),
-        body: BlocBuilder<EveningCubit, EveningState>(
+        body: BlocBuilder<MorningCubit, MorningState>(
           builder: (context, state) {
             if (state.errorMessage.isNotEmpty) {
               return const Center(child: Text('Something went wrong'));
@@ -27,42 +27,40 @@ class EveningPage extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
             final documents = state.documents;
-            return ListView(
-              children: [
-                for (final document in documents) ...[
-                  Dismissible(
-                      key: ValueKey(document.id),
-                      onDismissed: (_) {
-                        context
-                            .read<EveningCubit>()
-                            .delete(documentID: document.id);
-                      },
-                      child: EvenigPage(document['title'])),
-                ],
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: TextField(
-                    controller: controller,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          30,
-                        ),
-                      ),
-                      hintText: 'Zaplnuj swoją wieczorną pielęgnację',
-                    ),
-                  ),
-                )
+            return ListView(children: [
+              for (final document in documents) ...[
+                Dismissible(
+                    key: ValueKey(document.id),
+                    onDismissed: (_) {
+                      context
+                          .read<MorningCubit>()
+                          .delete(documentID: document.id);
+                    },
+                    child: MorningWidget(document['title']))
               ],
-            );
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: TextField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        30,
+                      ),
+                    ),
+                    hintText: 'Zaplnuj swoją poranną pielęgnację',
+                  ),
+                ),
+              ),
+            ]);
           },
         ),
-        floatingActionButton: BlocBuilder<EveningCubit, EveningState>(
+        floatingActionButton: BlocBuilder<MorningCubit, MorningState>(
           builder: (context, state) {
             return FloatingActionButton(
               onPressed: () {
-                context.read<EveningCubit>().add(controller.text);
+                context.read<MorningCubit>().add(controller.text);
                 controller.clear();
               },
               backgroundColor: const Color.fromARGB(255, 209, 167, 216),
@@ -75,8 +73,8 @@ class EveningPage extends StatelessWidget {
   }
 }
 
-class EvenigPage extends StatelessWidget {
-  const EvenigPage(
+class MorningWidget extends StatelessWidget {
+  const MorningWidget(
     this.title, {
     Key? key,
   }) : super(key: key);
