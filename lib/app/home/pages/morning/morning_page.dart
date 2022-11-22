@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:skincareapp/app/pages/morning/cubit/morning_cubit.dart';
+import 'package:skincareapp/app/home/pages/morning/cubit/morning_cubit.dart';
 
 class MorningPage extends StatelessWidget {
   MorningPage({Key? key}) : super(key: key);

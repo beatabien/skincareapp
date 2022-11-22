@@ -1,9 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:skincareapp/app/pages/care_page.dart';
-import 'package:skincareapp/app/pages/my_account_page.dart';
-import 'package:skincareapp/app/pages/spf_page.dart';
+import 'package:skincareapp/app/home/pages/care_page.dart';
+import 'package:skincareapp/app/home/pages/my_account_page.dart';
+import 'package:skincareapp/app/home/pages/spf/spf_page.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({

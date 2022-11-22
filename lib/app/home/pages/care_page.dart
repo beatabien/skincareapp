@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:skincareapp/app/pages/evening/evening_page.dart';
-import 'package:skincareapp/app/pages/morning/morning_page.dart';
+import 'package:skincareapp/app/home/pages/evening/evening_page.dart';
+import 'package:skincareapp/app/home/pages/morning/morning_page.dart';
 
 class CarePage extends StatelessWidget {
   const CarePage({
